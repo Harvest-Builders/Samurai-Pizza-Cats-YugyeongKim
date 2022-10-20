@@ -1,6 +1,6 @@
 ### Harvest-Talent-Builder
 
-## Getting Started
+## Getting Started -- Yugyeong Kim
 
 1. Create a new personal (and private!) repository in the Harvest-Builder github organization: https://github.com/Harvest-Builders/
    name: Samurai-Pizza-Cats-<your REAL name>
