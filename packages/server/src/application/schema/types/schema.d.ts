@@ -48,7 +48,7 @@ export type Pizza = {
   id: Scalars['ObjectID'];
   imgSrc: Scalars['String'];
   name: Scalars['String'];
-  toppingIds: Topping;
+  toppingIds: Array<Scalars['String']>;
 };
 
 export type PizzaQueryArgs = {

@@ -5,7 +5,7 @@ const typeDefs = gql`
     id: ObjectID!
     name: String!
     description: String!
-    toppingIds: Topping!
+    toppingIds: [String!]!
     imgSrc: String!
   }
 
