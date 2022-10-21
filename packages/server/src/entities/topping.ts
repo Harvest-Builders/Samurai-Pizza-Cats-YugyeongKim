@@ -1,5 +1,5 @@
 import { Document } from 'mongodb';
-import { Topping } from '../application/providers/toppings/topping.provider.types';
+import { Topping } from 'src/application/schema/types/schema';
 
 interface ToppingDocument extends Document, Omit<Topping, 'id'> {}
 
