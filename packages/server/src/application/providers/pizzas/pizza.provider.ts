@@ -1,6 +1,5 @@
-import { ObjectId, Collection } from 'mongodb';
+import { Collection } from 'mongodb';
 import { PizzaDocument, toPizzaObject } from '../../../entities/pizza';
-import validateStringInputs from '../../../lib/string-validator';
 import { Pizza } from './pizza.provider.types';
 
 export class PizzaProvider {

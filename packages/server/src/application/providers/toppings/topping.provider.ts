@@ -2,6 +2,8 @@ import { ObjectId, Collection } from 'mongodb';
 import { ToppingDocument, toToppingObject } from '../../../entities/topping';
 import { CreateToppingInput, Topping, UpdateToppingInput } from './topping.provider.types';
 import validateStringInputs from '../../../lib/string-validator';
+import { toPizzaObject } from 'src/entities/pizza';
+import { Pizza } from 'src/application/schema/types/schema';
 
 class ToppingProvider {
   constructor(private collection: Collection<ToppingDocument>) {}

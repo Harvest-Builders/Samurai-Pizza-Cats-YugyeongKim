@@ -19,6 +19,7 @@ const typeDefs = gql`
     createTopping(input: CreateToppingInput!): Topping!
     deleteTopping(input: DeleteToppingInput!): ObjectID!
     updateTopping(input: UpdateToppingInput!): Topping!
+    getToppingByIds(input: GetToppingByIdsInput!): string[]!
   }
 
   input CreateToppingInput {
