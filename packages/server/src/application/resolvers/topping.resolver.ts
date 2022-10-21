@@ -1,6 +1,6 @@
 import { CreateToppingInput, DeleteToppingInput, Topping, UpdateToppingInput } from '../schema/types/schema';
 import { Root } from '../schema/types/types';
-import { toppingProvider } from '../providers';
+import { toppingProvider } from '../providers/';
 
 const toppingResolver = {
   Query: {
