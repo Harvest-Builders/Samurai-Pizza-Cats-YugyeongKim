@@ -1,10 +1,11 @@
-import { Pizza } from '../schema/types/schema';
-import { pizzaProvider } from '../providers';
+import { pizzas } from 'scripts/initial-data';
+import { pizzaProvider, toppingProvider } from '../providers';
+import { Pizza, Topping } from '../schema/types/schema';
 
 const pizzaResolver = {
   Query: {
     pizzas: async (): Promise<Pizza[]> => {
-      return pizzaProvider.getPizzas();
+      return await pizzaProvider.getPizzas();
     },
   },
 };
