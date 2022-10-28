@@ -12,7 +12,7 @@ import {
   Theme,
 } from '@material-ui/core';
 
-import useToppingMutations from '../../hooks/topping/use-topping-mutations';
+import usePizzaMutations from '../../hooks/pizza/use-pizza-mutations';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,16 +35,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface ToppingModalProps {
-  selectedTopping?: any;
-  setSelectedTopping: React.Dispatch<React.SetStateAction<any>>;
+interface PizzaModalProps {
+  selectedPizza?: any;
+  setSelectedPizza: React.Dispatch<React.SetStateAction<any>>;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ToppingModal = ({ selectedTopping, setSelectedTopping, open, setOpen }: ToppingModalProps): JSX.Element => {
+const PizzaModal = ({ selectedPizza, setSelectedPizza, open, setOpen }: PizzaModalProps): JSX.Element => {
   const classes = useStyles();
-  const { onCreateTopping, onDeleteTopping, onUpdateTopping } = useToppingMutations();
+  //const { onCreateTopping, onDeleteTopping, onUpdateTopping } = usePizzaMutations();
+  console.log('pizzaModal test');
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -60,23 +61,25 @@ const ToppingModal = ({ selectedTopping, setSelectedTopping, open, setOpen }: To
     >
       <Fade in={open}>
         <Paper className={classes.paper}>
-          <h2>{selectedTopping ? 'Edit' : 'Add'} Topping</h2>
+          <h2>{selectedPizza ? 'Edit' : 'Add'} Topping</h2>
+          {/*
           <form className={classes.root} noValidate autoComplete="off">
             <TextField
               id="name-input"
               label="Topping Name"
-              defaultValue={selectedTopping?.name}
-              onChange={(event): void => setSelectedTopping({ ...selectedTopping, name: event.target.value })}
+              defaultValue={selectedPizza?.name}
+              onChange={(event): void => setSelectedPizza({ ...selectedPizza, name: event.target.value })}
             />
             <TextField
               id="price-input"
               label="Topping Price in Cents"
               type="number"
-              defaultValue={selectedTopping?.priceCents}
+              defaultValue={selectedPizza?.priceCents}
               onChange={(event): void =>
-                setSelectedTopping({ ...selectedTopping, priceCents: parseInt(event.target.value) })
+                setSelectedPizza({ ...selectedPizza, priceCents: parseInt(event.target.value) })
               }
             />
+            
             <IconButton
               edge="end"
               aria-label="update"
@@ -96,14 +99,16 @@ const ToppingModal = ({ selectedTopping, setSelectedTopping, open, setOpen }: To
                 onDeleteTopping(selectedTopping);
                 setOpen(false);
               }}
-            >
+            > 
               <Delete />
             </IconButton>
+            
           </form>
+          */}
         </Paper>
       </Fade>
     </Modal>
   );
 };
 
-export default ToppingModal;
+export default PizzaModal;
