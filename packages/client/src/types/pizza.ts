@@ -1,4 +1,4 @@
-import { Topping } from './schema';
+import { Topping } from './topping';
 
 export interface Pizza {
   id: string;

@@ -6,6 +6,7 @@ import { createStyles, List, ListItem, Theme } from '@material-ui/core';
 import PageHeader from '../common/PageHeader';
 import { Pizza } from '../../types/pizza';
 import PizzaItem from './PizzaItem';
+import { GET_PIZZAS } from '../../hooks/graphql/pizzas/queries/get-pizzas';
 
 const useStyles = makeStyles(({ typography }: Theme) =>
   createStyles({
@@ -37,8 +38,6 @@ const Pizzas: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedTopping, setSelectedTopping] = React.useState<Partial<Pizza>>();
 
-  console.log(data);
-
   const handleOpen = (pizza?: Pizza): void => {
     setSelectedTopping(pizza);
     setOpen(true);
@@ -47,6 +46,8 @@ const Pizzas: React.FC = () => {
   if (loading) {
     return <div className={classes.skeleton}>Loading ...</div>;
   }
+
+  console.log(data);
 
   const pizzaList = data?.pizzas.map((pizza: Pizza) => (
     <PizzaItem
