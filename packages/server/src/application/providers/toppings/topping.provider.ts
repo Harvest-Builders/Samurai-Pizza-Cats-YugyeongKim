@@ -2,6 +2,7 @@ import { ObjectId, Collection } from 'mongodb';
 import { ToppingDocument, toToppingObject } from '../../../entities/topping';
 import { CreateToppingInput, Topping, UpdateToppingInput } from './topping.provider.types';
 import validateStringInputs from '../../../lib/string-validator';
+import { Pizza } from '../pizzas/pizza.provider.types';
 
 class ToppingProvider {
   constructor(private collection: Collection<ToppingDocument>) {}
@@ -10,7 +11,6 @@ class ToppingProvider {
     const toppings = await this.collection.find().sort({ name: 1 }).toArray();
     return toppings.map(toToppingObject);
   }
-
   //topping.provider.ts
   public async getToppingsById(toppingIds: Topping[]): Promise<Topping[]> {
     const toppingsById = await this.collection
@@ -22,6 +22,14 @@ class ToppingProvider {
       .sort({ name: 1 })
       .toArray();
     return toppingsById.map(toToppingObject);
+  }
+
+  public async getPriceCents(toppingIds: Topping[]): Promise<Number> {
+    let prices = 0;
+    await this.collection.find({ _id: { $in: toppingIds } }).forEach(function (topping) {
+      prices += topping.priceCents;
+    });
+    return prices;
   }
 
   public async createTopping(input: CreateToppingInput): Promise<Topping> {

@@ -48,6 +48,7 @@ export type Pizza = {
   id: Scalars['ObjectID'];
   imgSrc: Scalars['String'];
   name: Scalars['String'];
+  priceCents?: Maybe<Scalars['Int']>;
   toppingIds?: Maybe<Array<Maybe<Topping>>>;
   toppings?: Maybe<Array<Maybe<Topping>>>;
 };

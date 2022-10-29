@@ -12,6 +12,7 @@ const GET_PIZZAS = gql`
         priceCents
       }
       imgSrc
+      priceCents
     }
   }
 `;

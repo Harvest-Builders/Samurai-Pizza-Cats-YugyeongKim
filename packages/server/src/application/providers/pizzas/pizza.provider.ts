@@ -2,6 +2,7 @@ import { Collection } from 'mongodb';
 import { PizzaDocument, toPizzaObject } from '../../../entities/pizza';
 import { Pizza } from './pizza.provider.types';
 
+type omitPriceCentsPizza = Omit<Pizza, 'priceCents'>;
 export class PizzaProvider {
   constructor(private pizzaCollection: Collection<PizzaDocument>) {}
 
