@@ -11,6 +11,6 @@ export interface CreateToppingInput {
 
 export interface UpdateToppingInput {
   id: string;
-  name?: string | null;
-  priceCents?: number | null;
+  name?: string;
+  priceCents?: number;
 }

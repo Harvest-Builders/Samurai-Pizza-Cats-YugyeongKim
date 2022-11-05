@@ -1,15 +1,13 @@
-const validateStringInputs = (input: string | string[]): void => {
-  if (Array.isArray(input)) {
-    input.forEach((elem: string) => {
-      if (!elem.trim()) {
-        throw new Error('Inputs cannot be empty strings');
-      }
-    });
-  } else {
-    if (!input.trim()) {
-      throw new Error('Inputs cannot be empty strings');
+import { UpdatePizzaInput, UpdateToppingInput } from 'src/application/schema/types/schema';
+
+const validateStringInputs = (input: UpdateToppingInput | UpdatePizzaInput): Boolean => {
+  let result = true;
+  for (const [key, value] of Object.entries(input)) {
+    if (value === '' || value === null) {
+      result = false;
     }
   }
+  return result;
 };
 
 export default validateStringInputs;

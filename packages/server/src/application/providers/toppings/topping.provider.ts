@@ -2,7 +2,6 @@ import { ObjectId, Collection } from 'mongodb';
 import { ToppingDocument, toToppingObject } from '../../../entities/topping';
 import { CreateToppingInput, Topping, UpdateToppingInput } from './topping.provider.types';
 import validateStringInputs from '../../../lib/string-validator';
-import { Pizza } from '../pizzas/pizza.provider.types';
 
 class ToppingProvider {
   constructor(private collection: Collection<ToppingDocument>) {}
@@ -66,7 +65,9 @@ class ToppingProvider {
   public async updateTopping(input: UpdateToppingInput): Promise<Topping> {
     const { id, name, priceCents } = input;
 
-    if (name) validateStringInputs(name);
+    if (!validateStringInputs(input)) {
+      throw new Error(`empty string is not valid`);
+    }
 
     const data = await this.collection.findOneAndUpdate(
       { _id: new ObjectId(id) },
