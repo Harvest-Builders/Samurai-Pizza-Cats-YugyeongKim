@@ -4,19 +4,19 @@ export interface Pizza {
   id: string;
   name: string;
   description: string;
-  toppings: [Topping];
-  toppingIds: [Topping];
+  toppings?: [Topping];
+  toppingIds?: [Topping];
   imgSrc: string;
-  priceCents: number;
+  priceCents?: number;
 }
 
 export interface CreatePizzaInput {
   name: string;
   description: string;
-  toppings: [Topping];
-  toppingIds: [Topping];
+  toppings?: [Topping];
+  toppingIds?: [Topping];
   imgSrc: string;
-  priceCents: number;
+  priceCents?: number;
 }
 
 export interface UpdatePizzaInput {

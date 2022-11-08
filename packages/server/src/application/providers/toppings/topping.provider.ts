@@ -11,7 +11,7 @@ class ToppingProvider {
     return toppings.map(toToppingObject);
   }
   //topping.provider.ts
-  public async getToppingsById(toppingIds: Topping[]): Promise<Topping[]> {
+  public async getToppingsById(toppingIds: Topping[] | undefined): Promise<Topping[]> {
     const toppingsById = await this.collection
       .find(
         //The following operation uses the $in operator to return documents in the bios collection
@@ -23,7 +23,7 @@ class ToppingProvider {
     return toppingsById.map(toToppingObject);
   }
 
-  public async getPriceCents(toppingIds: Topping[]): Promise<Number> {
+  public async getPriceCents(toppingIds: Topping[] | undefined): Promise<Number> {
     let prices = 0;
     await this.collection.find({ _id: { $in: toppingIds } }).forEach(function (topping) {
       prices += topping.priceCents;

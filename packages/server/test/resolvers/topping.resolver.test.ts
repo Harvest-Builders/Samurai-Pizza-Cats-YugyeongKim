@@ -40,7 +40,7 @@ describe('toppingResolver', (): void => {
           }
         }
       `;
-      test('should get all toppings', async () => {
+      it('should get all toppings', async () => {
         jest.spyOn(toppingProvider, 'getToppings').mockResolvedValue([mockTopping]);
 
         const result = await client.query({ query });
