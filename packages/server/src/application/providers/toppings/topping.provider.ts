@@ -2,8 +2,6 @@ import { ObjectId, Collection } from 'mongodb';
 import { ToppingDocument, toToppingObject } from '../../../entities/topping';
 import { CreateToppingInput, Topping, UpdateToppingInput } from './topping.provider.types';
 import validateStringInputs from '../../../lib/string-validator';
-import { toPizzaObject } from 'src/entities/pizza';
-import { Pizza } from 'src/application/schema/types/schema';
 
 class ToppingProvider {
   constructor(private collection: Collection<ToppingDocument>) {}
@@ -11,6 +9,19 @@ class ToppingProvider {
   public async getToppings(): Promise<Topping[]> {
     const toppings = await this.collection.find().sort({ name: 1 }).toArray();
     return toppings.map(toToppingObject);
+  }
+
+  //topping.provider.ts
+  public async getToppingsById(toppingIds: Topping[]): Promise<Topping[]> {
+    const toppingsById = await this.collection
+      .find(
+        //The following operation uses the $in operator to return documents in the bios collection
+        //where _id equals either 5 or ObjectId("507c35dd8fada716c89d0013"):
+        { _id: { $in: toppingIds } }
+      )
+      .sort({ name: 1 })
+      .toArray();
+    return toppingsById.map(toToppingObject);
   }
 
   public async createTopping(input: CreateToppingInput): Promise<Topping> {
