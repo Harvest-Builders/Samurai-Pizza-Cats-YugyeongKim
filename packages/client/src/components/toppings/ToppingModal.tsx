@@ -44,9 +44,7 @@ interface ToppingModalProps {
 
 const ToppingModal = ({ selectedTopping, setSelectedTopping, open, setOpen }: ToppingModalProps): JSX.Element => {
   const classes = useStyles();
-
   const { onCreateTopping, onDeleteTopping, onUpdateTopping } = useToppingMutations();
-
   return (
     <Modal
       aria-labelledby="transition-modal-title"

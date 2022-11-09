@@ -14,9 +14,22 @@ export type Scalars = {
   ObjectID: any;
 };
 
+export type CreatePizzaInput = {
+  description?: InputMaybe<Scalars['String']>;
+  imgSrc?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  priceCents?: InputMaybe<Scalars['Int']>;
+  toppingIds?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
+  toppings?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
+};
+
 export type CreateToppingInput = {
   name: Scalars['String'];
   priceCents: Scalars['Int'];
+};
+
+export type DeletePizzaInput = {
+  id: Scalars['ObjectID'];
 };
 
 export type DeleteToppingInput = {
@@ -25,17 +38,32 @@ export type DeleteToppingInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createPizza: Pizza;
   createTopping: Topping;
+  deletePizza: Scalars['ObjectID'];
   deleteTopping: Scalars['ObjectID'];
+  updatePizza: Pizza;
   updateTopping: Topping;
+};
+
+export type MutationCreatePizzaArgs = {
+  input?: InputMaybe<CreatePizzaInput>;
 };
 
 export type MutationCreateToppingArgs = {
   input: CreateToppingInput;
 };
 
+export type MutationDeletePizzaArgs = {
+  input?: InputMaybe<DeletePizzaInput>;
+};
+
 export type MutationDeleteToppingArgs = {
   input: DeleteToppingInput;
+};
+
+export type MutationUpdatePizzaArgs = {
+  input?: InputMaybe<UpdatePizzaInput>;
 };
 
 export type MutationUpdateToppingArgs = {
@@ -44,10 +72,11 @@ export type MutationUpdateToppingArgs = {
 
 export type Pizza = {
   __typename?: 'Pizza';
-  description: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ObjectID'];
-  imgSrc: Scalars['String'];
+  imgSrc?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  priceCents?: Maybe<Scalars['Int']>;
   toppingIds?: Maybe<Array<Maybe<Topping>>>;
   toppings?: Maybe<Array<Maybe<Topping>>>;
 };
@@ -71,6 +100,16 @@ export type Topping = {
 
 export type ToppingQueryArgs = {
   id: Scalars['ObjectID'];
+};
+
+export type UpdatePizzaInput = {
+  description?: InputMaybe<Scalars['String']>;
+  id: Scalars['ObjectID'];
+  imgSrc?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  priceCents?: InputMaybe<Scalars['Int']>;
+  toppingIds?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
+  toppings?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
 };
 
 export type UpdateToppingInput = {

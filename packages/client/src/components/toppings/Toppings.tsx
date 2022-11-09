@@ -35,10 +35,8 @@ const useStyles = makeStyles(({ typography }: Theme) =>
 
 const Toppings: React.FC = () => {
   const classes = useStyles();
-
   const [open, setOpen] = React.useState(false);
   const [selectedTopping, setSelectedTopping] = React.useState<Partial<Topping>>();
-
   const { loading, data } = useQuery(GET_TOPPINGS);
 
   const handleOpen = (topping?: Topping): void => {
@@ -49,6 +47,7 @@ const Toppings: React.FC = () => {
   if (loading) {
     return <div className={classes.skeleton}>Loading ...</div>;
   }
+  console.log(data);
 
   const toppingList = data?.toppings.map((topping: Topping) => (
     <ToppingItem
