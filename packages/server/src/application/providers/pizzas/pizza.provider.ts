@@ -15,7 +15,14 @@ export class PizzaProvider {
   public async createPizza(input: CreatePizzaInput): Promise<Pizza> {
     const pizzas = await this.pizzaCollection.findOneAndUpdate(
       { _id: new ObjectId() },
-      { $set: { ...input, updateAt: new Date().toISOString(), createdAt: new Date().toISOString() } },
+      {
+        $set: {
+          ...input,
+          toppingIds: input.toppingIds?.map((toppingId) => new ObjectId(toppingId)),
+          updateAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+        },
+      },
       { upsert: true, returnDocument: 'after' }
     );
 

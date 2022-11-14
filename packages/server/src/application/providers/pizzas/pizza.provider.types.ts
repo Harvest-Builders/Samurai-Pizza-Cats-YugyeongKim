@@ -5,7 +5,7 @@ export interface Pizza {
   name: string;
   description: string;
   toppings?: [Topping];
-  toppingIds?: [Topping];
+  toppingIds?: string[];
   imgSrc: string;
   priceCents?: number;
 }
@@ -14,7 +14,7 @@ export interface CreatePizzaInput {
   name: string;
   description: string;
   toppings?: [Topping];
-  toppingIds?: [Topping];
+  toppingIds?: string[];
   imgSrc: string;
   priceCents?: number;
 }
@@ -24,7 +24,7 @@ export interface UpdatePizzaInput {
   name: string;
   description: string;
   toppings?: [Topping];
-  toppingIds?: [Topping];
+  toppingIds?: string[];
   imgSrc: string;
   priceCents?: number;
 }

@@ -2,7 +2,6 @@ import { IconButton, ListItem, Theme } from '@material-ui/core';
 import { AddCircle, Edit } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import toDollars from '../../lib/format-dollars';
-
 import { Pizza } from '../../types/pizza';
 
 const useStyles = makeStyles(({ typography }: Theme) => ({
