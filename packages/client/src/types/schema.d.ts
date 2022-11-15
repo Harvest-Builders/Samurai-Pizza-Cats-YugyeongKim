@@ -18,9 +18,7 @@ export type CreatePizzaInput = {
   description: Scalars['String'];
   imgSrc: Scalars['String'];
   name: Scalars['String'];
-  priceCents?: InputMaybe<Scalars['Int']>;
   toppingIds?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
-  toppings?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
 };
 
 export type CreateToppingInput = {
@@ -103,13 +101,11 @@ export type ToppingQueryArgs = {
 };
 
 export type UpdatePizzaInput = {
-  description: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
   id: Scalars['ObjectID'];
-  imgSrc: Scalars['String'];
-  name: Scalars['String'];
-  priceCents?: InputMaybe<Scalars['Int']>;
+  imgSrc?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
   toppingIds?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
-  toppings?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
 };
 
 export type UpdateToppingInput = {

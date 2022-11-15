@@ -13,18 +13,14 @@ export interface Pizza {
 export interface CreatePizzaInput {
   name: string;
   description: string;
-  toppings?: [Topping];
   toppingIds?: string[];
   imgSrc: string;
-  priceCents?: number;
 }
 
 export interface UpdatePizzaInput {
   id: string;
-  name: string;
-  description: string;
-  toppings?: [Topping];
+  name?: string;
+  description?: string;
   toppingIds?: string[];
-  imgSrc: string;
-  priceCents?: number;
+  imgSrc?: string;
 }

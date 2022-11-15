@@ -51,7 +51,7 @@ export class PizzaProvider {
   }
 
   public async updatePizza(input: UpdatePizzaInput): Promise<Pizza> {
-    const { id, name, description, toppings, toppingIds, imgSrc, priceCents } = input;
+    const { id, name, description, toppingIds, imgSrc } = input;
     let pizza;
     if (!validateStringInputs(input)) {
       throw new Error(`empty string is not valid`);
@@ -62,10 +62,8 @@ export class PizzaProvider {
           $set: {
             ...(name && { name: name }),
             ...(description && { description: description }),
-            ...(toppings && { toppings: toppings }),
-            ...(toppingIds && { toppingIds: toppingIds }),
+            ...(toppingIds && { toppingIds: input.toppingIds?.map((toppingId) => new ObjectId(toppingId)) }),
             ...(imgSrc && { imgSrc: imgSrc }),
-            ...(priceCents && { priceCents: priceCents }),
           },
         },
         { returnDocument: 'after' }

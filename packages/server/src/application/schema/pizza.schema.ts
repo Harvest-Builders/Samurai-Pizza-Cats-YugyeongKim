@@ -29,9 +29,7 @@ const typeDefs = gql`
     name: String!
     description: String!
     imgSrc: String!
-    toppings: [ObjectID]
     toppingIds: [ObjectID]
-    priceCents: Int
   }
 
   input DeletePizzaInput {
@@ -40,12 +38,10 @@ const typeDefs = gql`
 
   input UpdatePizzaInput {
     id: ObjectID!
-    name: String!
-    description: String!
-    toppings: [ObjectID]
+    name: String
+    description: String
     toppingIds: [ObjectID]
-    imgSrc: String!
-    priceCents: Int
+    imgSrc: String
   }
 `;
 
