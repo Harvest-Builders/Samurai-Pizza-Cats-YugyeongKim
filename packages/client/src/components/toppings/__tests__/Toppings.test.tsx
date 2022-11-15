@@ -36,7 +36,6 @@ describe('Toppings', () => {
     const topping2 = createTestTopping();
     mockToppingsQuery([topping1, topping2]);
   });
-
   test('should display a list of toppings', async () => {
     const { $findToppingItems } = renderToppingList();
 
