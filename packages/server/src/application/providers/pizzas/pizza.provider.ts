@@ -1,8 +1,8 @@
 import { Collection, ObjectId } from 'mongodb';
-import { CreatePizzaInput, UpdatePizzaInput } from 'src/application/schema/types/schema';
+import { CreatePizzaInput } from 'src/application/schema/types/schema';
 import validateStringInputs from '../../../lib/string-validator';
 import { PizzaDocument, toPizzaObject } from '../../../entities/pizza';
-import { Pizza } from './pizza.provider.types';
+import { Pizza, UpdatePizzaInput } from './pizza.provider.types';
 
 export class PizzaProvider {
   constructor(private pizzaCollection: Collection<PizzaDocument>) {}
