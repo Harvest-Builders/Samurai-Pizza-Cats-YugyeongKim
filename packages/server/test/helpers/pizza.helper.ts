@@ -10,16 +10,6 @@ const createMockPizza = (data?: Partial<Pizza>): Pizza => {
     description: 'Simple',
     imgSrc:
       'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
-    toppingIds: ['a70b4a6ed7a09da8f7cd38af'],
-    priceCents: 250,
-    toppings: [
-      {
-        __typename: 'Topping',
-        id: 'a70b4a6ed7a09da8f7cd38af',
-        name: 'test Sauce',
-        priceCents: 250,
-      },
-    ],
     ...data,
   };
 };
@@ -32,14 +22,6 @@ const createMockPizzaDocument = (data?: Partial<PizzaDocument>): PizzaDocument =
     imgSrc:
       'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
     toppingIds: ['a70b4a6ed7a09da8f7cd38af'],
-    priceCents: 250,
-    toppings: [
-      {
-        id: 'a70b4a6ed7a09da8f7cd38af',
-        name: 'test Sauce',
-        priceCents: 250,
-      },
-    ],
     ...data,
   };
 };

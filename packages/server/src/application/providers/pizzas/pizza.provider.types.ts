@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import { Topping } from '../../providers/toppings/topping.provider.types';
 
 export interface Pizza {

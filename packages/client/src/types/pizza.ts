@@ -5,7 +5,7 @@ export interface Pizza {
   name: string;
   description: string;
   toppings: [Topping];
-  toppingIds: [Topping];
+  toppingIds: string[];
   imgSrc: string;
   priceCents: number;
 }
