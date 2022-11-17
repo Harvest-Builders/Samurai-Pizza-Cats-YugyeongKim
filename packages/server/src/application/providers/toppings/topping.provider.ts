@@ -1,7 +1,8 @@
 import { ObjectId, Collection } from 'mongodb';
 import { ToppingDocument, toToppingObject } from '../../../entities/topping';
-import { CreateToppingInput, Topping, UpdateToppingInput } from './topping.provider.types';
+import { CreateToppingInput, UpdateToppingInput } from './topping.provider.types';
 import validateStringInputs from '../../../lib/string-validator';
+import { Topping } from 'src/application/schema/types/schema';
 
 class ToppingProvider {
   constructor(private collection: Collection<ToppingDocument>) {}
@@ -11,7 +12,7 @@ class ToppingProvider {
     return toppings.map(toToppingObject);
   }
   //topping.provider.ts
-  public async getToppingsById(toppingIds: string[] | undefined): Promise<Topping[]> {
+  public async getToppingsById(toppingIds: string[]): Promise<Topping[]> {
     const toppingsById = await this.collection
       .find(
         //The following operation uses the $in operator to return documents in the bios collection
@@ -23,7 +24,7 @@ class ToppingProvider {
     return toppingsById.map(toToppingObject);
   }
 
-  public async getPriceCents(toppingIds: string[] | undefined): Promise<Number> {
+  public async getPriceCents(toppingIds: string[]): Promise<Number> {
     let prices = 0;
     await this.collection.find({ _id: { $in: toppingIds } }).forEach(function (topping) {
       prices += topping.priceCents;

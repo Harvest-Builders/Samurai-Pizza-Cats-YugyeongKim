@@ -1,11 +1,13 @@
+import { Topping } from '../toppings/topping.provider.types';
+
 export interface Pizza {
   id: string;
   name: string;
   description: string;
-  //toppings?: [Topping];
-  toppingIds?: string[];
+  toppings: [Topping];
   imgSrc: string;
-  priceCents?: number;
+  priceCents: number;
+  toppingIds: string[];
 }
 
 export interface CreatePizzaInput {

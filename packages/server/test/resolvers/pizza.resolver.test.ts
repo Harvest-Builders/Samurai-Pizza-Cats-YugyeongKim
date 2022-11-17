@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-core';
 import { pizzaResolver } from '../../src/application/resolvers/pizza.resolver';
-import { pizzaProvider } from '../../src/application/providers';
+import { pizzaProvider, toppingProvider } from '../../src/application/providers';
 import { typeDefs } from '../../src/application/schema/index';
 import {
   MutationCreatePizzaArgs,
@@ -37,6 +37,12 @@ describe('pizzaResolver', () => {
             name
             description
             imgSrc
+            toppings {
+              id
+              name
+              priceCents
+            }
+            priceCents
           }
         }
       `;
@@ -54,6 +60,8 @@ describe('pizzaResolver', () => {
               name: mockPizza.name,
               description: mockPizza.description,
               imgSrc: mockPizza.imgSrc,
+              toppings: mockPizza.toppings,
+              priceCents: mockPizza.priceCents,
             },
           ],
         });
@@ -70,19 +78,27 @@ describe('pizzaResolver', () => {
             name
             description
             imgSrc
+            priceCents
+            toppings {
+              id
+              name
+              priceCents
+            }
           }
         }
       `;
 
       const validPizza = createMockPizza({
-        name: 'Test',
-        description: 'Test',
+        name: 'Cheese',
+        description: 'Simple',
         imgSrc:
           'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80',
       });
 
       beforeEach(() => {
         jest.spyOn(pizzaProvider, 'createPizza').mockResolvedValue(validPizza);
+        jest.spyOn(toppingProvider, 'getToppingsById').mockResolvedValue(mockPizza.toppings);
+        jest.spyOn(toppingProvider, 'getPriceCents').mockResolvedValue(mockPizza.priceCents);
       });
 
       it('should call create pizza when passed a valid input', async () => {
@@ -91,6 +107,7 @@ describe('pizzaResolver', () => {
             name: validPizza.name,
             description: validPizza.description,
             imgSrc: validPizza.imgSrc,
+            toppingIds: ['test'],
           },
         };
 
@@ -106,6 +123,8 @@ describe('pizzaResolver', () => {
             name: mockPizza.name,
             description: mockPizza.description,
             imgSrc: mockPizza.imgSrc,
+            toppings: mockPizza.toppings,
+            priceCents: mockPizza.priceCents,
           },
         });
       });
@@ -148,6 +167,12 @@ describe('pizzaResolver', () => {
           name
           description
           imgSrc
+          toppings {
+            id
+            name
+            priceCents
+          }
+          priceCents
         }
       }
     `;
