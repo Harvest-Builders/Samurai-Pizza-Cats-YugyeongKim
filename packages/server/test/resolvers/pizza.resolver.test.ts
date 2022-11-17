@@ -150,7 +150,7 @@ describe('pizzaResolver', () => {
     test('should call deletePizza with id', async () => {
       await client.mutate({ mutation, variables });
 
-      expect(pizzaProvider.deletePizza).toHaveBeenCalledWith(Pizza_id.id);
+      expect(pizzaProvider.deletePizza).toHaveBeenCalledWith(variables.input.id);
     });
 
     test('should return deleted Pizza id', async () => {
