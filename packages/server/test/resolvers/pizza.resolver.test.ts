@@ -141,7 +141,7 @@ describe('pizzaResolver', () => {
       }
     `;
 
-    const variables = { input: { id: Pizza_id.id } };
+    const variables: MutationDeletePizzaArgs = { input: { id: Pizza_id.id } };
 
     beforeEach(() => {
       jest.spyOn(pizzaProvider, 'deletePizza').mockResolvedValue(mockPizza.id);
