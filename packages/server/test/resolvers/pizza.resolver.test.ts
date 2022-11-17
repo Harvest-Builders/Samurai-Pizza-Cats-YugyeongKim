@@ -10,6 +10,7 @@ import {
 
 import { createMockPizza } from '../helpers/pizza.helper';
 import { TestClient } from '../helpers/client.helper';
+import { ObjectId } from 'bson';
 
 let client: TestClient;
 
@@ -18,6 +19,10 @@ jest.mock('../../src/application/database', () => ({
 }));
 
 const mockPizza = createMockPizza();
+
+const Pizza_id = {
+  id: new ObjectId().toHexString(),
+};
 
 beforeAll(async (): Promise<void> => {
   client = new TestClient(typeDefs, pizzaResolver);
@@ -136,7 +141,7 @@ describe('pizzaResolver', () => {
       }
     `;
 
-    const variables: MutationDeletePizzaArgs = { input: { id: mockPizza.id } };
+    const variables: MutationDeletePizzaArgs = { input: { id: Pizza_id.id } };
 
     beforeEach(() => {
       jest.spyOn(pizzaProvider, 'deletePizza').mockResolvedValue(mockPizza.id);
