@@ -21,7 +21,7 @@ jest.mock('../../src/application/database', () => ({
 const mockPizza = createMockPizza();
 
 const Pizza_id = {
-  id: '12345678923',
+  id: new ObjectId().toHexString(),
 };
 
 beforeAll(async (): Promise<void> => {
@@ -141,7 +141,7 @@ describe('pizzaResolver', () => {
       }
     `;
 
-    const variables: MutationDeletePizzaArgs = { input: { id: Pizza_id.id } };
+    const variables: MutationDeletePizzaArgs = { input: { id: mockPizza.id } };
 
     beforeEach(() => {
       jest.spyOn(pizzaProvider, 'deletePizza').mockResolvedValue(mockPizza.id);
@@ -150,7 +150,7 @@ describe('pizzaResolver', () => {
     test('should call deletePizza with id', async () => {
       await client.mutate({ mutation, variables });
 
-      expect(pizzaProvider.deletePizza).toHaveBeenCalledWith(variables.input.id);
+      expect(pizzaProvider.deletePizza).toHaveBeenCalledWith(mockPizza.id);
     });
 
     test('should return deleted Pizza id', async () => {
