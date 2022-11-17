@@ -97,8 +97,6 @@ describe('pizzaResolver', () => {
 
       beforeEach(() => {
         jest.spyOn(pizzaProvider, 'createPizza').mockResolvedValue(validPizza);
-        jest.spyOn(toppingProvider, 'getToppingsById').mockResolvedValue(mockPizza.toppings);
-        jest.spyOn(toppingProvider, 'getPriceCents').mockResolvedValue(mockPizza.priceCents);
       });
 
       it('should call create pizza when passed a valid input', async () => {

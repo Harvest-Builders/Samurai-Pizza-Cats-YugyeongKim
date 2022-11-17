@@ -4,9 +4,9 @@ export interface Pizza {
   id: string;
   name: string;
   description: string;
-  toppings: [Topping];
+  toppings?: [Topping];
   imgSrc: string;
-  priceCents: number;
+  priceCents?: number;
   toppingIds: string[];
 }
 
