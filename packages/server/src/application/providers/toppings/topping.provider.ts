@@ -1,8 +1,7 @@
 import { ObjectId, Collection } from 'mongodb';
 import { ToppingDocument, toToppingObject } from '../../../entities/topping';
-import { CreateToppingInput, UpdateToppingInput } from './topping.provider.types';
+import { CreateToppingInput, Topping, UpdateToppingInput } from './topping.provider.types';
 import validateStringInputs from '../../../lib/string-validator';
-import { Topping } from 'src/application/schema/types/schema';
 
 class ToppingProvider {
   constructor(private collection: Collection<ToppingDocument>) {}
@@ -11,25 +10,27 @@ class ToppingProvider {
     const toppings = await this.collection.find().sort({ name: 1 }).toArray();
     return toppings.map(toToppingObject);
   }
-  //topping.provider.ts
-  public async getToppingsById(toppingIds: string[]): Promise<Topping[]> {
+
+  public async getToppingsById(ids: string[]): Promise<Topping[]> {
+    const newIds = ids.map((id) => new ObjectId(id));
     const toppingsById = await this.collection
-      .find(
-        //The following operation uses the $in operator to return documents in the bios collection
-        //where _id equals either 5 or ObjectId("507c35dd8fada716c89d0013"):
-        { _id: { $in: toppingIds } }
-      )
+      .find({ _id: { $in: newIds } })
       .sort({ name: 1 })
       .toArray();
     return toppingsById.map(toToppingObject);
   }
 
-  public async getPriceCents(toppingIds: string[]): Promise<Number> {
-    let prices = 0;
-    await this.collection.find({ _id: { $in: toppingIds } }).forEach(function (topping) {
-      prices += topping.priceCents;
-    });
-    return prices;
+  public async getPriceCents(ids: string[]): Promise<number> {
+    const sum = (await this.getToppingsById(ids)).reduce((prev, current) => prev + current.priceCents, 0);
+    return sum;
+  }
+
+  public async validateToppings(ids: string[]): Promise<void> {
+    ids.map((id) => new Object(id));
+    const allToppingIds = (await this.getToppings()).map((toppings) => toppings.id);
+    const result = ids.map((id) => allToppingIds.indexOf(id));
+    const isValid = result.includes(-1) ? false : true;
+    if (isValid == false) throw new Error(`toppings are not valid`);
   }
 
   public async createTopping(input: CreateToppingInput): Promise<Topping> {
@@ -66,9 +67,7 @@ class ToppingProvider {
   public async updateTopping(input: UpdateToppingInput): Promise<Topping> {
     const { id, name, priceCents } = input;
 
-    if (!validateStringInputs(input)) {
-      throw new Error(`empty string is not valid`);
-    }
+    if (name) validateStringInputs(name);
 
     const data = await this.collection.findOneAndUpdate(
       { _id: new ObjectId(id) },

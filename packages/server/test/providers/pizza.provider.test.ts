@@ -11,7 +11,7 @@ import { createMockToppingDocument } from '../helpers/topping.helper';
 const stubPizzaCollection = stub<Collection<PizzaDocument>>();
 const stubToppingCollection = stub<Collection<ToppingDocument>>();
 const toppingProvider = new ToppingProvider(stubToppingCollection);
-const pizzaProvider = new PizzaProvider(stubPizzaCollection);
+const pizzaProvider = new PizzaProvider(stubPizzaCollection, toppingProvider);
 
 beforeEach(jest.clearAllMocks);
 
@@ -37,15 +37,15 @@ describe('pizzaProvider', (): void => {
   });
 
   describe('createPizza', (): void => {
+    const validTopping = createMockToppingDocument({ name: 'test topping', priceCents: 300 });
     const testPizzaData = {
       name: 'create pizza',
       description: 'create description',
       imgSrc: 'create image',
-      toppingIds: ['a70b4a6ed7a09da8f7cd38af'],
+      toppingIds: validTopping.id,
     };
 
     const validPizza = createMockPizzaDocument(testPizzaData);
-    const validTopping = createMockToppingDocument({ name: 'test topping', priceCents: 300 });
     beforeEach(() => {
       reveal(stubPizzaCollection).findOneAndUpdate.mockImplementation(() => ({ value: validPizza }));
       reveal(stubToppingCollection).find.mockImplementation(mockSortToArray([validTopping]));
@@ -80,14 +80,14 @@ describe('pizzaProvider', (): void => {
   });
 
   describe('updatePizza', (): void => {
+    const validTopping = createMockToppingDocument({ name: 'test topping', priceCents: 300 });
     const testPizzaData = {
       name: 'test pizza',
       description: 'test description',
       imgSrc: 'test image',
-      toppingIds: ['a70b4a6ed7a09da8f7cd38af'],
+      toppingIds: validTopping.id,
     };
     const validPizza = createMockPizzaDocument(testPizzaData);
-
     beforeEach(() => {
       reveal(stubPizzaCollection).findOneAndUpdate.mockImplementation(() => ({ value: validPizza }));
     });

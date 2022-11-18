@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-core';
 import { pizzaResolver } from '../../src/application/resolvers/pizza.resolver';
-import { pizzaProvider, toppingProvider } from '../../src/application/providers';
+import { pizzaProvider } from '../../src/application/providers';
 import { typeDefs } from '../../src/application/schema/index';
 import {
   MutationCreatePizzaArgs,
