@@ -31,13 +31,8 @@ export class PizzaProvider {
     if (!pizzas.value) {
       throw new Error(`Could not create the ${input.name} pizza`);
     }
-    //const toppingIds = pizzas.value.toppingIds;
-
-    // Regenerated toppingIdsArr no dupulicate toppingIds
-    //const validatedToppingIdsArr = toppingIds.filter((id, index) => toppingIds.indexOf(id) === index);
     const pizza = {
       ...pizzas.value,
-      //validatedToppingIdsArr
     };
     return toPizzaObject(pizza);
   }

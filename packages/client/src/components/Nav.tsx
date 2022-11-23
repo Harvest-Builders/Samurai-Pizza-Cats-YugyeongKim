@@ -47,10 +47,18 @@ const Nav = (): JSX.Element | null => {
               src={'https://i.pinimg.com/564x/34/50/56/345056b367f0934aa86b5e21dee6f1de.jpg'}
             />
           </NavLink>
-          <NavLink className={classes.link} to="/pizzas">
+          <NavLink
+            className={classes.link}
+            to="/pizzas"
+            style={(isActive) => ({ color: isActive ? 'green' : 'white' })}
+          >
             Pizzas
           </NavLink>
-          <NavLink className={classes.link} to="/toppings">
+          <NavLink
+            className={classes.link}
+            to="/toppings"
+            style={(isActive) => ({ color: isActive ? 'green' : 'white' })}
+          >
             Toppings
           </NavLink>
         </div>

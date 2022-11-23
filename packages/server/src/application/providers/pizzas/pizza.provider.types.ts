@@ -11,10 +11,10 @@ export interface Pizza {
 }
 
 export interface CreatePizzaInput {
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   toppingIds?: string[];
-  imgSrc: string;
+  imgSrc?: string;
 }
 
 export interface UpdatePizzaInput {

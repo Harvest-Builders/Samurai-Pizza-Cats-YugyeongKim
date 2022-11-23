@@ -1,13 +1,12 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
-
 import PageHeader from '../common/PageHeader';
 import PizzasList from './PizzaList';
+import { Container } from '@material-ui/core';
 
 const Pizzas: React.FC = () => {
   return (
-    <Container maxWidth="md">
-      <PageHeader pageHeader={'Under construction'} />
+    <Container maxWidth="xl" style={{ display: 'flex', flexDirection: 'column' }}>
+      <PageHeader pageHeader={'Pizzas'} />
       <PizzasList />
     </Container>
   );
