@@ -13,7 +13,7 @@ describe('Pizzas', () => {
 
     return {
       ...view,
-      $findPizzaItems: () => screen.findAllByText(/^pizza-item-/),
+      $findPizzaItems: () => screen.findAllByTestId(/^pizza-item-/),
       $findPizzaItemsButtons: () => screen.findAllByRole('button'),
     };
   };

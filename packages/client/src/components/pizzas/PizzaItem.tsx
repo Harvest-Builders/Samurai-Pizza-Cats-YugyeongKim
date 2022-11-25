@@ -87,14 +87,13 @@ export interface PizzaItemProps {
   handleOpen: (pizza?: Pizza) => void;
 }
 
-const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen }) => {
+const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) => {
   const classes = useStyles();
   const [visibledFixIcon, setVisibledFixIcon] = useState(false);
-
   console.log(pizza?.imgSrc);
   return (
     <Box className={classes.ListContainer}>
-      <Card>
+      <Card {...props}>
         <CardContent
           style={{ padding: '0', width: '100%', height: '100%' }}
           onMouseLeave={() => setVisibledFixIcon(!visibledFixIcon)}
@@ -113,6 +112,7 @@ const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen }) => {
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
                   }}
+                  data-testid={`pizza-imgSrc-${pizza?.id}`}
                 ></button>
                 <div className={classes.pizzaInfoBox}>
                   <p data-testid={`pizza-name-${pizza?.id}`} className={classes.pizzaName}>

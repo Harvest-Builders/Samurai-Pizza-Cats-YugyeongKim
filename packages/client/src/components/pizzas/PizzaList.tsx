@@ -37,7 +37,11 @@ const PizzasList: React.FC = () => {
   const { loading, data } = useQuery(GET_PIZZAS);
 
   if (loading) {
-    return <div className={classes.skeleton}>Pizza List Loading ...</div>;
+    return (
+      <div data-testid={`pizza-list-loading`} className={classes.skeleton}>
+        Pizza List Loading ...
+      </div>
+    );
   }
 
   const handleOpen = (pizza?: Pizza): void => {
