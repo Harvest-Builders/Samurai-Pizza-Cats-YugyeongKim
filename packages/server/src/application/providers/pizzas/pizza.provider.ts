@@ -1,11 +1,13 @@
 import { Collection, ObjectId } from 'mongodb';
-import { CreatePizzaInput, UpdatePizzaInput } from 'src/application/schema/types/schema';
+import { CreatePizzaInput, Pizza } from 'src/application/schema/types/schema';
 import validateStringInputs from '../../../lib/string-validator';
 import { PizzaDocument, toPizzaObject } from '../../../entities/pizza';
-import { Pizza } from './pizza.provider.types';
+import { UpdatePizzaInput } from './pizza.provider.types';
+import { ToppingDocument, toToppingObject } from '../../../entities/topping';
+import { ToppingProvider } from '../toppings/topping.provider';
 
 export class PizzaProvider {
-  constructor(private pizzaCollection: Collection<PizzaDocument>) {}
+  constructor(private pizzaCollection: Collection<PizzaDocument>, private toppingProvider: ToppingProvider) {}
 
   public async getPizzas(): Promise<Pizza[]> {
     const pizzas = await this.pizzaCollection.find().sort({ name: 1 }).toArray();
@@ -15,15 +17,23 @@ export class PizzaProvider {
   public async createPizza(input: CreatePizzaInput): Promise<Pizza> {
     const pizzas = await this.pizzaCollection.findOneAndUpdate(
       { _id: new ObjectId() },
-      { $set: { ...input, updateAt: new Date().toISOString(), createdAt: new Date().toISOString() } },
+      {
+        $set: {
+          ...input,
+          toppingIds: input.toppingIds?.map((toppingId) => new ObjectId(toppingId)),
+          updateAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+        },
+      },
       { upsert: true, returnDocument: 'after' }
     );
 
     if (!pizzas.value) {
       throw new Error(`Could not create the ${input.name} pizza`);
     }
-
-    const pizza = pizzas.value;
+    const pizza = {
+      ...pizzas.value,
+    };
     return toPizzaObject(pizza);
   }
 
@@ -44,31 +54,45 @@ export class PizzaProvider {
   }
 
   public async updatePizza(input: UpdatePizzaInput): Promise<Pizza> {
-    const { id, name, description, toppings, toppingIds, imgSrc, priceCents } = input;
+    const { id, name, description, toppingIds, imgSrc } = input;
     let pizza;
-    if (!validateStringInputs(input)) {
-      throw new Error(`empty string is not valid`);
-    } else {
-      const data = await this.pizzaCollection.findOneAndUpdate(
-        { _id: new ObjectId(id) },
-        {
-          $set: {
-            ...(name && { name: name }),
-            ...(description && { description: description }),
-            ...(toppings && { toppings: toppings }),
-            ...(toppingIds && { toppingIds: toppingIds }),
-            ...(imgSrc && { imgSrc: imgSrc }),
-            ...(priceCents && { priceCents: priceCents }),
-          },
-        },
-        { returnDocument: 'after' }
-      );
+    //check empty strings or wonky fields being passed into our database
+    if (name) validateStringInputs(name);
+    //check if the toppings you are adding to pizzas exist.
+    if (toppingIds) this.validateToppingInputs(toppingIds);
 
-      if (!data.value) {
-        throw new Error(`Could not update the pizza`);
-      }
-      pizza = data.value;
+    const data = await this.pizzaCollection.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          ...(name && { name: name }),
+          ...(description && { description: description }),
+          ...(toppingIds && { toppingIds: input.toppingIds?.map((toppingId) => new ObjectId(toppingId)) }),
+          ...(imgSrc && { imgSrc: imgSrc }),
+        },
+      },
+      { returnDocument: 'after' }
+    );
+
+    if (!data.value) {
+      throw new Error(`Could not update the pizza`);
     }
+    pizza = data.value;
+
+    if (name) validateStringInputs(name);
+
     return toPizzaObject(pizza);
+  }
+
+  public async validateToppingInputs(toppingIds: string[]): Promise<void> {
+    let toppings = await this.toppingProvider.getToppingsById(toppingIds);
+    console.log(toppings);
+    toppings.forEach((topping) => {
+      if (!toppingIds.includes(topping.id)) {
+        throw new Error("topping can't be found in toppingIds");
+      } else {
+        console.log('no error');
+      }
+    });
   }
 }

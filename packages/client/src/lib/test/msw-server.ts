@@ -42,15 +42,12 @@ const restResponse = (req: any, ctx: any) => {
 
 const graphqlResponse = (req: any, ctx: any) => {
   const method = 'query' in req.body ? 'query' : 'mutation';
-
   const response = handlerResponseMessage({
     apiType: 'graphql',
     url: req.url,
     method: `${req.body.operationName} ${method}`,
   });
-
   console.error(response.message);
-
   return ctx.errors([response]);
 };
 

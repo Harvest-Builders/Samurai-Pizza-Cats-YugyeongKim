@@ -1,23 +1,86 @@
-import { IconButton, ListItem, Theme } from '@material-ui/core';
-import { AddCircle, Edit } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/styles';
+import { Box, Card, CardContent } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
 import toDollars from '../../lib/format-dollars';
-
 import { Pizza } from '../../types/pizza';
+import makePizza from '../../assets/img/make-pizza.jpeg';
+import { AddCircle } from '@material-ui/icons';
+import { useState } from 'react';
+import defaultPizza from '../../assets/img/default-pizza.jpeg';
 
-const useStyles = makeStyles(({ typography }: Theme) => ({
-  container: {
-    display: 'flex',
-  },
-  name: {
-    minWidth: typography.pxToRem(500),
-  },
-  right: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-  },
-}));
+const useStyles = makeStyles(() =>
+  createStyles({
+    ListContainer: {
+      display: 'flex',
+      width: '25%',
+      justifyContent: 'center',
+      margin: '2vw',
+    },
+    card: {
+      display: 'flex',
+      width: '25vw',
+      height: '65vh',
+      flexDirection: 'column',
+      backgroundColor: 'white',
+    },
+    imgBox: {
+      textAlign: 'right',
+      width: '95%',
+      height: '90%',
+      border: 'none',
+      cursor: 'pointer',
+      marginBottom: '10px',
+    },
+    pizzaInfoBox: {
+      height: '30%',
+      width: '90%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '20px',
+    },
+    pizzaName: {
+      fontSize: '1.5vw',
+      fontWeight: 'bold',
+    },
+    pizzaDes: {
+      fontSize: '1vw',
+    },
+    pizzaPrice: {
+      fontSize: '1.2vw',
+    },
+    newPizzaBox: {
+      backgroundColor: 'black',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      justifyContent: 'space-between',
+      color: 'white',
+    },
+    newPizzaImg: {
+      width: '90%',
+    },
+    addIcon: {
+      fontSize: '3vw',
+      color: 'white',
+      transition: '0.3s',
+      '&:hover': {
+        color: 'grey',
+      },
+    },
+    fixIcon: {
+      fontSize: '3vw',
+      color: 'black',
+      position: 'relative',
+      cursor: 'pointer',
+      transition: '0.3s',
+      '&:hover': {
+        color: 'grey',
+      },
+    },
+  })
+);
 
 export interface PizzaItemProps {
   pizza?: Pizza;
@@ -26,25 +89,62 @@ export interface PizzaItemProps {
 
 const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) => {
   const classes = useStyles();
-
+  const [visibledFixIcon, setVisibledFixIcon] = useState(false);
+  console.log(pizza?.imgSrc);
   return (
-    /**
-     * Make a PizzaItem component that displays each field you
-     * receive for a pizza inside the common CardItem component.
-     * When data is received you should map over it.
-     */
-    <ListItem {...props} className={classes.container}>
-      <p data-testid={`pizza-name-${pizza?.id}`} className={classes.name}>
-        {pizza?.name}
-      </p>
-      <div className={classes.right}>
-        <img src={`${pizza?.imgSrc}`} width="100vw" />
-        <p data-testid={`pizza-price-${pizza?.id}`}>{pizza?.priceCents ? toDollars(pizza.priceCents) : ''}</p>
-        <IconButton edge="end" aria-label="modify" type="button" onClick={(): void => handleOpen(pizza)}>
-          {pizza ? <Edit /> : <AddCircle />}
-        </IconButton>
-      </div>
-    </ListItem>
+    <Box className={classes.ListContainer}>
+      <Card {...props}>
+        <CardContent
+          style={{ padding: '0', width: '100%', height: '100%' }}
+          onMouseLeave={() => setVisibledFixIcon(!visibledFixIcon)}
+        >
+          <div className={classes.card}>
+            {pizza ? (
+              <>
+                <button
+                  className={classes.imgBox}
+                  type="button"
+                  onClick={(): void => handleOpen(pizza)}
+                  onMouseEnter={() => setVisibledFixIcon(!visibledFixIcon)}
+                  style={{
+                    backgroundImage: `url(${pizza.imgSrc?.includes('https') ? pizza?.imgSrc : defaultPizza})`,
+                    backgroundSize: '100% 100%',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                  }}
+                  data-testid={`pizza-imgSrc-${pizza?.id}`}
+                ></button>
+                <div className={classes.pizzaInfoBox}>
+                  <p data-testid={`pizza-name-${pizza?.id}`} className={classes.pizzaName}>
+                    {pizza?.name}
+                  </p>
+                  <p data-testid={`pizza-description-${pizza?.id}`} className={classes.pizzaDes}>
+                    {pizza?.description ? pizza.description : ''}
+                  </p>
+                  <p data-testid={`pizza-priceCents-${pizza?.id}`} className={classes.pizzaPrice}>
+                    {pizza?.priceCents ? toDollars(pizza.priceCents) : ''}
+                  </p>
+                </div>
+              </>
+            ) : (
+              <div className={classes.newPizzaBox}>
+                <h2 style={{ fontSize: '2vw', textAlign: 'center', marginTop: '1vw' }}>Make New Pizza</h2>
+                <img className={classes.newPizzaImg} src={makePizza} />
+                <IconButton
+                  className={classes.addIcon}
+                  edge="end"
+                  aria-label="create"
+                  type="button"
+                  onClick={(): void => handleOpen(pizza)}
+                >
+                  <AddCircle fontSize="inherit" />
+                </IconButton>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 

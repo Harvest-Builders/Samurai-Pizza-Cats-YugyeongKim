@@ -47,7 +47,6 @@ const Toppings: React.FC = () => {
   if (loading) {
     return <div className={classes.skeleton}>Loading ...</div>;
   }
-  console.log(data);
 
   const toppingList = data?.toppings.map((topping: Topping) => (
     <ToppingItem

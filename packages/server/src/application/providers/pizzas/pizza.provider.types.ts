@@ -1,30 +1,26 @@
-import { Topping } from '../../providers/toppings/topping.provider.types';
+import { Topping } from '../toppings/topping.provider.types';
 
 export interface Pizza {
   id: string;
   name: string;
   description: string;
-  toppings: [Topping];
-  toppingIds: [Topping];
+  toppings?: [Topping];
   imgSrc: string;
-  priceCents: number;
+  priceCents?: number;
+  toppingIds: string[];
 }
 
 export interface CreatePizzaInput {
-  name: string;
-  description: string;
-  toppings: [Topping];
-  toppingIds: [Topping];
-  imgSrc: string;
-  priceCents: number;
+  name?: string;
+  description?: string;
+  toppingIds?: string[];
+  imgSrc?: string;
 }
 
 export interface UpdatePizzaInput {
   id: string;
-  name: string;
-  description: string;
-  toppings?: [Topping];
-  toppingIds?: [Topping];
-  imgSrc: string;
-  priceCents?: number;
+  name?: string | null;
+  description?: string | null;
+  toppingIds?: string[] | null;
+  imgSrc?: string | null;
 }

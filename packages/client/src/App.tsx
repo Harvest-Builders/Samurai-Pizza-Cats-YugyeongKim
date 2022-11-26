@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
 import Home from './components/Home';
 import Nav from './components/Nav';
 import Toppings from './components/toppings/Toppings';
@@ -10,7 +9,7 @@ const App = (): JSX.Element => {
     <BrowserRouter>
       <Nav />
       <Switch>
-        <Route path="/pizzas" component={Pizzas} exact />
+        <Route path="/pizzas" component={Pizzas} exact />ß
         <Route path="/toppings" component={Toppings} exact />
         <Route path="/" component={Home} exact />
       </Switch>
