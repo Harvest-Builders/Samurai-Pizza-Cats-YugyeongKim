@@ -3,9 +3,9 @@ import { Pizza } from './pizza.provider.types';
 
 export interface GetPizzaResult {
   results: Pizza[];
-  totalCount: number;
+  cursor?: string;
   hasNextPage: boolean;
-  cursor: string;
+  totalCount?: number | null;
 }
 
 export interface CursorResultsInput {

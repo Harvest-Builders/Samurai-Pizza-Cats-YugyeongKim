@@ -123,10 +123,10 @@ describe('pizzaResolver', (): void => {
       test('should call create pizza when passed a valid input', async () => {
         const variables: MutationCreatePizzaArgs = {
           input: {
-            name: validPizza.name,
-            description: validPizza.description,
-            imgSrc: validPizza.imgSrc,
-            toppingIds: validPizza.toppingIds,
+            name: validPizza?.name,
+            description: validPizza?.description,
+            imgSrc: validPizza?.imgSrc,
+            toppingIds: validPizza?.toppingIds,
           },
         };
 
