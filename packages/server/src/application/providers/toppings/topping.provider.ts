@@ -7,6 +7,7 @@ class ToppingProvider {
   constructor(private collection: Collection<ToppingDocument>) {}
 
   public async getToppings(): Promise<Topping[]> {
+    console.log('topping providere');
     const toppings = await this.collection.find().sort({ name: 1 }).toArray();
     return toppings.map(toToppingObject);
   }

@@ -7,11 +7,13 @@ import { PizzaDocument, toPizzaObject } from '../../src/entities/pizza';
 import { ToppingDocument } from '../../src/entities/topping';
 import { createMockPizzaDocument } from '../helpers/pizza.helper';
 import { createMockToppingDocument } from '../helpers/topping.helper';
+import { PizzaCursorProvider } from '../../src/application/providers/pizzas/pizza-cursor.provider';
 
 const stubPizzaCollection = stub<Collection<PizzaDocument>>();
 const stubToppingCollection = stub<Collection<ToppingDocument>>();
 const toppingProvider = new ToppingProvider(stubToppingCollection);
-const pizzaProvider = new PizzaProvider(stubPizzaCollection, toppingProvider);
+const pizzaCursorProvider = new PizzaCursorProvider(stubPizzaCollection);
+const pizzaProvider = new PizzaProvider(stubPizzaCollection, toppingProvider, pizzaCursorProvider);
 
 beforeEach(jest.clearAllMocks);
 
@@ -32,7 +34,7 @@ describe('pizzaProvider', (): void => {
     test('should get all pizzas', async () => {
       const result = await pizzaProvider.getPizzas();
 
-      expect(result).toEqual([mockPizza]);
+      expect(result.results).toEqual([mockPizza]);
     });
   });
 

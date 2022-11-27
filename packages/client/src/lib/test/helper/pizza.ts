@@ -10,5 +10,6 @@ export const createTestPizza = (data: Partial<Pizza> = {}): Pizza => ({
   imgSrc: 'test img',
   toppings: [],
   priceCents: 100,
+  toppingIds: [],
   ...data,
 });

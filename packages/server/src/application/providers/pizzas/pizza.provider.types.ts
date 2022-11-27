@@ -4,10 +4,10 @@ export interface Pizza {
   id: string;
   name: string;
   description: string;
-  toppings?: [Topping];
+  toppings?: Topping[];
   imgSrc: string;
-  priceCents?: number;
   toppingIds: string[];
+  priceCents?: number;
 }
 
 export interface CreatePizzaInput {

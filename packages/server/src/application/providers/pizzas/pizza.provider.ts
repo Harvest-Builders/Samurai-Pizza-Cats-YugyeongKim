@@ -1,17 +1,47 @@
 import { Collection, ObjectId } from 'mongodb';
-import { CreatePizzaInput, Pizza } from 'src/application/schema/types/schema';
 import validateStringInputs from '../../../lib/string-validator';
 import { PizzaDocument, toPizzaObject } from '../../../entities/pizza';
-import { UpdatePizzaInput } from './pizza.provider.types';
-import { ToppingDocument, toToppingObject } from '../../../entities/topping';
+import { Pizza, UpdatePizzaInput, CreatePizzaInput } from './pizza.provider.types';
 import { ToppingProvider } from '../toppings/topping.provider';
+import { PizzaCursorProvider } from './pizza-cursor.provider';
+import { CursorResultsInput, GetPizzaResult } from './pizza-cursor.provider.types';
 
 export class PizzaProvider {
-  constructor(private pizzaCollection: Collection<PizzaDocument>, private toppingProvider: ToppingProvider) {}
+  constructor(
+    private pizzaCollection: Collection<PizzaDocument>,
+    private toppingProvider: ToppingProvider,
+    private pizzaCursorProvider: PizzaCursorProvider
+  ) {}
 
-  public async getPizzas(): Promise<Pizza[]> {
-    const pizzas = await this.pizzaCollection.find().sort({ name: 1 }).toArray();
-    return pizzas.map(toPizzaObject);
+  public async getPizzas(input?: CursorResultsInput): Promise<GetPizzaResult> {
+    console.log('input------------' + JSON.stringify(input));
+    if (!input) {
+      input = {
+        cursor: 'empty',
+        limit: 0,
+      };
+    }
+    const { cursor, limit } = input;
+    if (cursor === 'empty') {
+      const pizzas = await this.pizzaCollection.find().sort({ name: 1 }).toArray();
+      return {
+        results: pizzas.map(toPizzaObject),
+        totalCount: pizzas.length,
+        hasNextPage: false,
+        cursor: '',
+      };
+    } else {
+      const { totalCount, hasNextPage, nextCursor, results } = await this.pizzaCursorProvider.getcursorResults({
+        cursor: cursor,
+        limit: limit,
+      });
+      return {
+        results: results.map(toPizzaObject),
+        totalCount: totalCount,
+        hasNextPage: hasNextPage,
+        cursor: nextCursor,
+      };
+    }
   }
 
   public async createPizza(input: CreatePizzaInput): Promise<Pizza> {
@@ -86,7 +116,6 @@ export class PizzaProvider {
 
   public async validateToppingInputs(toppingIds: string[]): Promise<void> {
     let toppings = await this.toppingProvider.getToppingsById(toppingIds);
-    console.log(toppings);
     toppings.forEach((topping) => {
       if (!toppingIds.includes(topping.id)) {
         throw new Error("topping can't be found in toppingIds");

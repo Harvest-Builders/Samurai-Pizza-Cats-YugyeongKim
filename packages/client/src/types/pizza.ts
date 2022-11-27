@@ -9,3 +9,15 @@ export interface Pizza {
   imgSrc?: string;
   priceCents?: number;
 }
+
+export interface GetPizzaResult {
+  results: Pizza[];
+  totalCount: number;
+  hasNextPage: boolean;
+  cursor: string;
+}
+
+export interface CursorResultsInput {
+  limit: number;
+  cursor: string;
+}

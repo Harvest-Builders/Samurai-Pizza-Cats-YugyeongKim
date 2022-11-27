@@ -5,13 +5,27 @@ const typeDefs = gql`
     id: ObjectID!
     name: String!
     description: String!
-    toppings: [Topping]
+    toppings: [Topping!]!
+    toppingIds: [ObjectID]
     imgSrc: String!
-    priceCents: Int
+    priceCents: Int!
+  }
+
+  type GetPizzaResult {
+    results: [Pizza!]!
+    totalCount: Int
+    hasNextPage: Boolean!
+    cursor: ObjectID
+  }
+
+  input CursorResultsInput {
+    limit: Int
+    cursor: ObjectID
   }
 
   type Query {
-    pizzas: [Pizza!]!
+    pizzas(input: CursorResultsInput): GetPizzaResult!
+    getPizza: [Pizza!]!
   }
 
   input PizzaQueryArgs {
