@@ -18,6 +18,7 @@ const createMockPizza = (data?: Partial<Pizza>): Pizza => {
         priceCents: 100,
       },
     ],
+    toppingIds: ['test'],
     priceCents: 100,
   };
 };
