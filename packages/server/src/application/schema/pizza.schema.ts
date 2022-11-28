@@ -4,14 +4,28 @@ const typeDefs = gql`
   type Pizza {
     id: ObjectID!
     name: String!
-    description: String!
-    toppings: [Topping]
-    imgSrc: String!
+    description: String
+    toppings: [Topping!]!
+    toppingIds: [ObjectID!]!
+    imgSrc: String
     priceCents: Int
   }
 
+  type GetPizzaResult {
+    results: [Pizza!]!
+    totalCount: Int
+    hasNextPage: Boolean!
+    cursor: ObjectID
+  }
+
+  input CursorResultsInput {
+    limit: Int
+    cursor: ObjectID
+  }
+
   type Query {
-    pizzas: [Pizza!]!
+    pizzas(input: CursorResultsInput): GetPizzaResult!
+    getPizza: [Pizza!]!
   }
 
   input PizzaQueryArgs {
@@ -26,8 +40,8 @@ const typeDefs = gql`
 
   input CreatePizzaInput {
     name: String!
-    description: String!
-    imgSrc: String!
+    description: String
+    imgSrc: String
     toppingIds: [ObjectID]
   }
 

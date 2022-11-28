@@ -1,11 +1,18 @@
 import { pizzaProvider } from '../providers';
-import { CreatePizzaInput, DeletePizzaInput, Pizza, UpdatePizzaInput } from '../schema/types/schema';
+import { CursorResultsInput } from '../providers/pizzas/pizza-cursor.provider.types';
+import { CreatePizzaInput, DeletePizzaInput, GetPizzaResult, Pizza, UpdatePizzaInput } from '../schema/types/schema';
 import { Root } from '../schema/types/types';
 
 const pizzaResolver = {
   Query: {
-    pizzas: async (): Promise<Pizza[]> => {
-      return await pizzaProvider.getPizzas();
+    pizzas: async (_: Root, args: { input?: CursorResultsInput }): Promise<GetPizzaResult> => {
+      const cursor: string = args.input?.cursor !== undefined ? args.input.cursor : 'noInput';
+      const limit: number = args.input?.limit !== undefined ? args.input.limit : 0;
+      const result = await pizzaProvider.getPizzas({
+        limit: limit,
+        cursor: cursor,
+      });
+      return result;
     },
   },
   Mutation: {

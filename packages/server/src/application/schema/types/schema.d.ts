@@ -15,8 +15,8 @@ export type Scalars = {
 };
 
 export type CreatePizzaInput = {
-  description: Scalars['String'];
-  imgSrc: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  imgSrc?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   toppingIds?: InputMaybe<Array<InputMaybe<Scalars['ObjectID']>>>;
 };
@@ -26,12 +26,25 @@ export type CreateToppingInput = {
   priceCents: Scalars['Int'];
 };
 
+export type CursorResultsInput = {
+  cursor?: InputMaybe<Scalars['ObjectID']>;
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
 export type DeletePizzaInput = {
   id: Scalars['ObjectID'];
 };
 
 export type DeleteToppingInput = {
   id: Scalars['ObjectID'];
+};
+
+export type GetPizzaResult = {
+  __typename?: 'GetPizzaResult';
+  cursor?: Maybe<Scalars['ObjectID']>;
+  hasNextPage: Scalars['Boolean'];
+  results: Array<Pizza>;
+  totalCount?: Maybe<Scalars['Int']>;
 };
 
 export type Mutation = {
@@ -70,12 +83,13 @@ export type MutationUpdateToppingArgs = {
 
 export type Pizza = {
   __typename?: 'Pizza';
-  description: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ObjectID'];
-  imgSrc: Scalars['String'];
+  imgSrc?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   priceCents?: Maybe<Scalars['Int']>;
-  toppings?: Maybe<Array<Maybe<Topping>>>;
+  toppingIds: Array<Scalars['ObjectID']>;
+  toppings: Array<Topping>;
 };
 
 export type PizzaQueryArgs = {
@@ -84,8 +98,13 @@ export type PizzaQueryArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  pizzas: Array<Pizza>;
+  getPizza: Array<Pizza>;
+  pizzas: GetPizzaResult;
   toppings: Array<Topping>;
+};
+
+export type QueryPizzasArgs = {
+  input?: InputMaybe<CursorResultsInput>;
 };
 
 export type Topping = {
