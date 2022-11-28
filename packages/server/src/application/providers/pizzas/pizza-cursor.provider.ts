@@ -18,12 +18,12 @@ class PizzaCursorProvider {
   }
 
   public async getcursorResults({ limit, cursor }: CursorResultsInput): Promise<any> {
-    console.log('this.getcursorResults');
     let hasNextPage = false;
     const itemsToSkip = await this.getCursorIndex(cursor);
 
     const mongoDocuments = await this.pizzaCollection
       .find()
+      .sort({ name: 1 })
       .skip(itemsToSkip)
       .limit(limit + 1)
       .toArray();

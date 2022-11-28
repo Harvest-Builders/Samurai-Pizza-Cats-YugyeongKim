@@ -6,7 +6,7 @@ import { Root } from '../schema/types/types';
 const pizzaResolver = {
   Query: {
     pizzas: async (_: Root, args: { input?: CursorResultsInput }): Promise<GetPizzaResult> => {
-      const cursor: string = args.input?.cursor !== undefined ? args.input.cursor : 'empty';
+      const cursor: string = args.input?.cursor !== undefined ? args.input.cursor : 'noInput';
       const limit: number = args.input?.limit !== undefined ? args.input.limit : 0;
       const result = await pizzaProvider.getPizzas({
         limit: limit,

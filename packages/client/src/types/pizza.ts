@@ -2,12 +2,12 @@ import { Topping } from './topping';
 
 export interface Pizza {
   id: string;
-  name?: string;
-  description?: string;
-  toppings?: Topping[];
-  toppingIds?: string[];
-  imgSrc?: string;
-  priceCents?: number;
+  name: string;
+  description?: string | null;
+  toppingIds: string[];
+  imgSrc?: string | null;
+  toppings: Topping[];
+  priceCents?: number | null;
 }
 
 export interface GetPizzaResult {

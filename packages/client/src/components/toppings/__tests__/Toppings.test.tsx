@@ -10,7 +10,6 @@ import Toppings from '../Toppings';
 describe('Toppings', () => {
   const renderToppingList = () => {
     const view = renderWithProviders(<Toppings />);
-
     return {
       ...view,
       $findToppingItems: () => screen.findAllByTestId(/^topping-item-/),
@@ -39,7 +38,6 @@ describe('Toppings', () => {
 
   test('should display a list of toppings', async () => {
     const { $findToppingItems } = renderToppingList();
-
     expect(await $findToppingItems()).toHaveLength(2);
   });
 });

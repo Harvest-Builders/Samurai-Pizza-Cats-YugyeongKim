@@ -89,44 +89,38 @@ export interface PizzaItemProps {
 
 const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) => {
   const classes = useStyles();
-  const [visibledFixIcon, setVisibledFixIcon] = useState(false);
-  console.log(pizza?.imgSrc);
   return (
     <Box className={classes.ListContainer}>
-      <Card {...props}>
-        <CardContent
-          style={{ padding: '0', width: '100%', height: '100%' }}
-          onMouseLeave={() => setVisibledFixIcon(!visibledFixIcon)}
-        >
-          <div className={classes.card}>
-            {pizza ? (
-              <>
-                <button
-                  className={classes.imgBox}
-                  type="button"
-                  onClick={(): void => handleOpen(pizza)}
-                  onMouseEnter={() => setVisibledFixIcon(!visibledFixIcon)}
-                  style={{
-                    backgroundImage: `url(${pizza.imgSrc?.includes('https') ? pizza?.imgSrc : defaultPizza})`,
-                    backgroundSize: '100% 100%',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center',
-                  }}
-                  data-testid={`pizza-imgSrc-${pizza?.id}`}
-                ></button>
-                <div className={classes.pizzaInfoBox}>
-                  <p data-testid={`pizza-name-${pizza?.id}`} className={classes.pizzaName}>
-                    {pizza?.name}
-                  </p>
-                  <p data-testid={`pizza-description-${pizza?.id}`} className={classes.pizzaDes}>
-                    {pizza?.description ? pizza.description : ''}
-                  </p>
-                  <p data-testid={`pizza-priceCents-${pizza?.id}`} className={classes.pizzaPrice}>
-                    {pizza?.priceCents ? toDollars(pizza.priceCents) : ''}
-                  </p>
-                </div>
-              </>
-            ) : (
+      <Card>
+        <CardContent style={{ padding: '0', width: '100%', height: '100%' }} {...props}>
+          {pizza ? (
+            <div className={classes.card}>
+              <button
+                className={classes.imgBox}
+                type="button"
+                onClick={(): void => handleOpen(pizza)}
+                style={{
+                  backgroundImage: `url(${pizza.imgSrc?.includes('https') ? pizza?.imgSrc : defaultPizza})`,
+                  backgroundSize: '100% 100%',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                }}
+                data-testid={`pizza-imgSrc-${pizza?.id}`}
+              ></button>
+              <div className={classes.pizzaInfoBox}>
+                <p data-testid={`pizza-name-${pizza?.id}`} className={classes.pizzaName}>
+                  {pizza?.name}
+                </p>
+                <p data-testid={`pizza-description-${pizza?.id}`} className={classes.pizzaDes}>
+                  {pizza?.description ? pizza.description : ''}
+                </p>
+                <p data-testid={`pizza-priceCents-${pizza?.id}`} className={classes.pizzaPrice}>
+                  {pizza?.priceCents ? toDollars(pizza.priceCents) : ''}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className={classes.card}>
               <div className={classes.newPizzaBox}>
                 <h2 style={{ fontSize: '2vw', textAlign: 'center', marginTop: '1vw' }}>Make New Pizza</h2>
                 <img className={classes.newPizzaImg} src={makePizza} />
@@ -140,8 +134,8 @@ const PizzaItem: React.FC<PizzaItemProps> = ({ pizza, handleOpen, ...props }) =>
                   <AddCircle fontSize="inherit" />
                 </IconButton>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </Box>

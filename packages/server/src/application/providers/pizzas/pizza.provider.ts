@@ -14,21 +14,32 @@ export class PizzaProvider {
   ) {}
 
   public async getPizzas(input?: CursorResultsInput): Promise<GetPizzaResult> {
-    console.log('input------------' + JSON.stringify(input));
     if (!input) {
       input = {
-        cursor: 'empty',
+        cursor: 'noInput',
         limit: 0,
       };
     }
     const { cursor, limit } = input;
-    if (cursor === 'empty') {
+
+    if (cursor === 'noInput') {
       const pizzas = await this.pizzaCollection.find().sort({ name: 1 }).toArray();
+      // const nextCursor = pizzas[0].id
       return {
         results: pizzas.map(toPizzaObject),
         totalCount: pizzas.length,
         hasNextPage: false,
         cursor: '',
+      };
+    }
+    if (cursor === 'empty') {
+      const pizzas = await this.pizzaCollection.find().sort({ name: 1 }).limit(limit).toArray();
+      const nextCursor = pizzas[limit - 1]?.id;
+      return {
+        results: pizzas.map(toPizzaObject),
+        totalCount: pizzas.length,
+        hasNextPage: false,
+        cursor: nextCursor ? null : nextCursor,
       };
     } else {
       const { totalCount, hasNextPage, nextCursor, results } = await this.pizzaCursorProvider.getcursorResults({

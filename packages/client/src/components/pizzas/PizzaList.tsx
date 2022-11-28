@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/styles';
 import { createStyles, Theme } from '@material-ui/core';
-import { Pizza } from '../../types';
+import { GetPizzaResult, Pizza } from '../../types';
 import PizzaItem from './PizzaItem';
 import { GET_PIZZAS } from '../../hooks/graphql/pizzas/queries/get-pizzas';
 import PizzaModal from './PizzaModal';
@@ -20,7 +20,16 @@ const useStyles = makeStyles(({ typography }: Theme) =>
       justifyContent: 'center',
       verticalAlign: 'center',
     },
-    pizzaBox: {},
+    button: {
+      backgroundColor: 'white',
+      fontSize: '24px',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '2vw',
+      outline: 'none',
+      margin: 'auto',
+      display: 'block',
+    },
   })
 );
 
@@ -34,7 +43,17 @@ const PizzasList: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [selectedPizza, setselectedPizza] = React.useState<Partial<Pizza>>();
-  const { loading, data } = useQuery(GET_PIZZAS);
+  const [limit, setLimit] = useState(5);
+  const { loading, error, data } = useQuery(GET_PIZZAS, {
+    variables: {
+      input: {
+        limit,
+        cursor: 'empty',
+      },
+    },
+  });
+
+  const clickMorePizzas = useCallback((event) => setLimit((current) => current + 3), [limit]);
 
   if (loading) {
     return (
@@ -48,16 +67,21 @@ const PizzasList: React.FC = () => {
     setselectedPizza(pizza);
     setOpen(true);
   };
-  const pizzaList = data?.pizzas.map((pizza: Pizza) => (
+
+  const pizzaList = data?.pizzas.results.map((pizza: Pizza) => (
     <PizzaItem data-testid={`pizza-item${pizza?.id}`} key={pizza?.id} handleOpen={handleOpen} pizza={pizza} />
   ));
 
   return (
     <Container maxWidth="xl">
+      <div data-testid={`pizza-item-list`}></div>
       <div className={classes.container}>
         <PizzaItem key="add-pizza" handleOpen={handleOpen} />
         {pizzaList}
       </div>
+      <button className={classes.button} onClick={clickMorePizzas}>
+        See more pizzas
+      </button>
       <PizzaModal selectedPizza={selectedPizza} setSelectedPizza={setselectedPizza} open={open} setOpen={setOpen} />
     </Container>
   );
