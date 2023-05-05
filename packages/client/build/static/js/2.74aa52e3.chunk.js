@@ -24802,7 +24802,7 @@
                     WDS_SOCKET_PATH: void 0,
                     WDS_SOCKET_PORT: void 0,
                     FAST_REFRESH: !0,
-                    REACT_APP_SERVER_URL: 'localhost:4001/graphql',
+                    REACT_APP_SERVER_URL: 'http://localhost:4001/graphql',
                   }),
                   e
                 )
@@ -24814,7 +24814,7 @@
                       WDS_SOCKET_PATH: void 0,
                       WDS_SOCKET_PORT: void 0,
                       FAST_REFRESH: !0,
-                      REACT_APP_SERVER_URL: 'localhost:4001/graphql',
+                      REACT_APP_SERVER_URL: 'http://localhost:4001/graphql',
                     })[e] = f[e]);
               }),
               { parsed: f }
