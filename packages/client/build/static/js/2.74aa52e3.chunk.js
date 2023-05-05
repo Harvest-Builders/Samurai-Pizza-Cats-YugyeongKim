@@ -24802,7 +24802,7 @@
                     WDS_SOCKET_PATH: void 0,
                     WDS_SOCKET_PORT: void 0,
                     FAST_REFRESH: !0,
-                    REACT_APP_SERVER_URL: 'http://ec2-18-116-164-51.us-east-2.compute.amazonaws.com/graphql',
+                    REACT_APP_SERVER_URL: 'http://localhost:4001/graphql',
                   }),
                   e
                 )
@@ -24814,7 +24814,7 @@
                       WDS_SOCKET_PATH: void 0,
                       WDS_SOCKET_PORT: void 0,
                       FAST_REFRESH: !0,
-                      REACT_APP_SERVER_URL: 'http://ec2-18-116-164-51.us-east-2.compute.amazonaws.com/graphql',
+                      REACT_APP_SERVER_URL: 'http://localhost:4001/graphql',
                     })[e] = f[e]);
               }),
               { parsed: f }
