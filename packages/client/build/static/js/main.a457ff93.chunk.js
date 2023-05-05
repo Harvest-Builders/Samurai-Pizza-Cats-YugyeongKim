@@ -1087,7 +1087,7 @@
           typography: { fontFamily: 'Poppins, Roboto, sans-serif' },
           overrides: { MuiButton: { root: { fontFamily: 'Poppins, sans-serif', textTransform: 'none' } } },
         }),
-        Ue = { uri: 'http://localhost:4001/graphql', cache: new Be.a({}) },
+        Ue = { uri: 'http://ec2-18-116-164-51.us-east-2.compute.amazonaws.com/graphql', cache: new Be.a({}) },
         We = function (e) {
           var t = e.clientOptions,
             n = void 0 === t ? {} : t,
@@ -1105,4 +1105,4 @@
   },
   [[325, 1, 2]],
 ]);
-//# sourceMappingURL=main.aa3f7467.chunk.js.map
+//# sourceMappingURL=main.a457ff93.chunk.js.map

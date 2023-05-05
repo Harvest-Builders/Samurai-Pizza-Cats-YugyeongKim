@@ -1,4 +1,4 @@
-/*! For license information please see 2.3d6bda9d.chunk.js.LICENSE.txt */
+/*! For license information please see 2.74aa52e3.chunk.js.LICENSE.txt */
 (this.webpackJsonpclient = this.webpackJsonpclient || []).push([
   [2],
   [
@@ -24802,7 +24802,7 @@
                     WDS_SOCKET_PATH: void 0,
                     WDS_SOCKET_PORT: void 0,
                     FAST_REFRESH: !0,
-                    REACT_APP_SERVER_URL: 'http://localhost:4001/graphql',
+                    REACT_APP_SERVER_URL: 'http://ec2-18-116-164-51.us-east-2.compute.amazonaws.com/graphql',
                   }),
                   e
                 )
@@ -24814,7 +24814,7 @@
                       WDS_SOCKET_PATH: void 0,
                       WDS_SOCKET_PORT: void 0,
                       FAST_REFRESH: !0,
-                      REACT_APP_SERVER_URL: 'http://localhost:4001/graphql',
+                      REACT_APP_SERVER_URL: 'http://ec2-18-116-164-51.us-east-2.compute.amazonaws.com/graphql',
                     })[e] = f[e]);
               }),
               { parsed: f }
@@ -38822,4 +38822,4 @@
     },
   ],
 ]);
-//# sourceMappingURL=2.3d6bda9d.chunk.js.map
+//# sourceMappingURL=2.74aa52e3.chunk.js.map
