@@ -5,6 +5,7 @@ import {
   ApolloProvider,
   ApolloClientOptions,
   NormalizedCacheObject,
+  createHttpLink,
 } from '@apollo/client';
 import { ThemeProvider } from '@material-ui/core';
 
@@ -15,17 +16,17 @@ interface ProvidersProps {
   clientOptions?: Partial<ApolloClientOptions<NormalizedCacheObject>>;
 }
 
-const defaultClientOptions: ApolloClientOptions<NormalizedCacheObject> = {
-  uri: process.env.REACT_APP_SERVER_URL,
-  cache: new InMemoryCache({}),
-};
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4001/graphql',
+});
 
 const Providers: React.FC<ProvidersProps> = ({ clientOptions = {}, children }) => (
   <React.StrictMode>
     <ApolloProvider
       client={
         new ApolloClient({
-          ...defaultClientOptions,
+          link: httpLink,
+          cache: new InMemoryCache({}),
           ...clientOptions,
         })
       }

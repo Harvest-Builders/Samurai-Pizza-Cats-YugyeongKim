@@ -17,6 +17,7 @@
     "apollo-server": "^3.3.0",
     "async-exit-hook": "^2.0.1",
     "dotenv": "^10.0.0",
+    "express-session": "^1.17.3",
     "graphql": "^15.5.0",
     "graphql-codegen": "^0.4.0",
     "lodash": "^4.17.21",

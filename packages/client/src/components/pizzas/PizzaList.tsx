@@ -52,7 +52,7 @@ const PizzasList: React.FC = () => {
       },
     },
   });
-
+  console.log(data);
   const clickMorePizzas = useCallback((event) => setLimit((current) => current + 3), [limit]);
 
   if (loading) {
